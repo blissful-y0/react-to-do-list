@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -5,6 +6,7 @@ import {
   useState,
 } from "react";
 import styled from "styled-components";
+import { todoAtom } from "../store/todo";
 
 export const Title = styled.div`
   background: #021666;
@@ -49,6 +51,7 @@ export const Submit = styled.button`
 
 const TodoHeader = () => {
   const [newTaskName, setNewTaskName] = useState<string>("");
+  const [todoItems, setTodoItems] = useAtom(todoAtom);
 
   const onChangeTodoInput: ChangeEventHandler<HTMLInputElement> = (
     e: ChangeEvent<HTMLInputElement>
@@ -58,7 +61,19 @@ const TodoHeader = () => {
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    console.log({ newTaskName });
+    if (!newTaskName) return;
+    setTodoItems((prevTodos) =>
+      prevTodos
+        ? [
+            ...prevTodos,
+            {
+              taskName: newTaskName,
+              isCompleted: false,
+              id: todoItems.length + 1,
+            },
+          ]
+        : prevTodos
+    );
   };
 
   return (

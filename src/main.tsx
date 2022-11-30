@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
-import Todo from "./TodoList";
+import Todo from "./pages/TodoList";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
